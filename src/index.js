@@ -16,9 +16,22 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(
-  "mongodb+srv://sainiamit:MERNpassword123@recipes.o1wsjje.mongodb.net/recipes?retryWrites=true&w=majority&appName=recipes"
-);
+const dbConnnect = async () => {
+  try {
+    await mongoose.connect("mongodb+srv://sainiamit:MERNpassword123@recipes.o1wsjje.mongodb.net/recipes?retryWrites=true&w=majority&appName=recipes");
+    console.log("Connected to DB");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+dbConnnect();
+
+app.get("/", (req, res) => {
+  res.send("api is working fine!");
+});
+
+
 
 app.use("/auth", userRouter);
 app.use("/recipes", recipesRouter);
